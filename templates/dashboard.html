@@ -1,0 +1,268 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+	<h2 class="my-4">Your Inventory</h2>
+
+	<!-- Action Buttons Section -->
+	<div class="mb-4">
+		<a href="{{ url_for('routes.add_item') }}" class="btn btn-primary">
+			<i class="bi bi-plus-circle"></i> Add New Item
+		</a>
+		<a
+			href="{{ url_for('routes.manage_categories') }}"
+			class="btn btn-secondary"
+		>
+			<i class="bi bi-tags"></i> Manage Categories
+		</a>
+		<div class="col-md-12">
+			<div class="d-flex gap-2 justify-content-end">
+				<a href="{{ url_for('routes.export_items') }}" class="btn btn-success">
+					<i class="bi bi-file-earmark-excel"></i> Export
+				</a>
+				<form
+					action="{{ url_for('routes.import_items') }}"
+					method="POST"
+					enctype="multipart/form-data"
+				>
+					<div class="input-group">
+						<input
+							type="file"
+							name="file"
+							class="form-control"
+							accept=".csv,.xlsx,.xls"
+						/>
+						<button type="submit" class="btn btn-info">
+							<i class="bi bi-file-earmark-arrow-up"></i> Import
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Combined Search and Filters Section -->
+	<div class="card mb-4">
+		<div class="card-header d-flex justify-content-between align-items-center">
+			<h5 class="mb-0">Search Box</h5>
+			<small class="text-muted">{{ items.total }} items found</small>
+		</div>
+		<div class="card-body">
+			<form method="GET" action="{{ url_for('routes.dashboard') }}">
+				<!-- Search Input -->
+				<div class="input-group mb-3">
+					<input
+						type="text"
+						name="q"
+						class="form-control"
+						placeholder="Search items..."
+						value="{{ search_query or '' }}"
+					/>
+					<button type="submit" class="btn btn-primary">
+						<i class="bi bi-search"></i> Search
+					</button>
+					<a
+						href="{{ url_for('routes.dashboard') }}"
+						class="btn btn-outline-danger"
+					><center>
+						Clear All
+					</center>
+					</a>
+				</div>
+
+				<!-- Updated Category Filter Section -->
+				<div class="card mb-4">
+					<div class="card-header">
+						<h5 class="mb-0">Filters</h5>
+					</div>
+					<div class="card-body">
+						<form method="GET" action="{{ url_for('routes.dashboard') }}">
+							<div class="d-flex flex-wrap gap-3">
+								<!-- Increased gap -->
+								{% for category in categories %}
+								<div class="position-relative">
+									<input
+										class="form-check-input category-checkbox"
+										type="checkbox"
+										name="categories"
+										value="{{ category.id }}"
+										id="cat{{ category.id }}"
+										{%
+										if
+										category.id
+										in
+										selected_categories
+										%}checked{%
+										endif
+										%}
+									/>
+									<label
+										class="badge bg-primary category-label d-flex align-items-center"
+										for="cat{{ category.id }}"
+									>
+										<span class="ms-4">{{ category.name }}</span>
+										<!-- Increased left spacing -->
+										<span class="badge bg-light text-dark ms-2">
+											{{ category.items|selectattr('owner', 'equalto',
+											current_user)|list|length }}
+										</span>
+									</label>
+								</div>
+								{% endfor %}
+							</div>
+							<div class="mt-4">
+								<!-- Increased top margin -->
+								<button type="submit" class="btn btn-primary me-2">
+									<i class="bi bi-funnel me-2"></i>Apply Filters
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Inventory Table -->
+	<div class="table-responsive">
+		<table class="table table-hover align-middle">
+			{% if items.items %}
+			<thead class="table-light">
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Category</th>
+					<th>Quantity</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			{% endif %}
+			<tbody>
+				{% for item in items.items %}
+				<tr>
+					<td>{{ item.name }}</td>
+					<td>{{ item.description|default('N/A', true) }}</td>
+					<td>
+						{% if item.item_category %}
+						<span class="badge bg-primary rounded-pill">
+							{{ item.item_category.name }}
+						</span>
+						{% else %}
+						<span class="badge bg-secondary rounded-pill">N/A</span>
+						{% endif %}
+					</td>
+					<td>
+						<span
+							class="badge bg-{% if item.quantity < 5 %}danger{% else %}success{% endif %} rounded-pill"
+						>
+							{{ item.quantity }}
+						</span>
+					</td>
+					<td>
+						<div class="btn-group" role="group">
+							<a
+								href="{{ url_for('routes.edit_item', id=item.id) }}"
+								class="btn btn-sm btn-outline-warning"
+								title="Edit"
+							>
+								<i class="bi bi-pencil"></i>
+							</a>
+							<a
+								href="{{ url_for('routes.delete_item', id=item.id) }}"
+								class="btn btn-sm btn-outline-danger"
+								title="Delete"
+								onclick="return confirm('Are you sure you want to delete this item?')"
+							>
+								<i class="bi bi-trash"></i>
+							</a>
+						</div>
+					</td>
+				</tr>
+				{% else %}
+				<tr>
+					<td colspan="5">
+						<div class="empty-state text-center py-5 my-5">
+							<div class="empty-state-icon mb-4">
+								<i class="bi bi-inboxes display-1 text-muted"></i>
+							</div>
+							<h3 class="text-muted mb-3">No Items Found</h3>
+							<p class="text-muted mb-4 lead">
+								{% if search_query or selected_categories %} Try adjusting your
+								search or filters {% else %} Get started by adding your first
+								inventory item {% endif %}
+							</p>
+							<a
+								href="{{ url_for('routes.add_item') }}"
+								class="btn btn-primary btn-lg px-5"
+							>
+								<i class="bi bi-plus-circle me-2"></i>Add Item
+							</a>
+						</div>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="position-fixed bottom-0 end-0 mb-4 me-4">
+		<a
+			href="{{ url_for('routes.add_item') }}"
+			class="btn btn-primary btn-lg rounded-pill shadow-lg btn-hover"
+			data-bs-toggle="tooltip"
+			data-bs-placement="left"
+			title="Add New Item"
+		>
+			<i class="bi bi-plus-lg me-2"></i> New Item
+		</a>
+	</div>
+
+	<!-- Pagination -->
+	{% if items.pages > 1 %}
+	<nav aria-label="Inventory pagination">
+		<ul class="pagination justify-content-center">
+			{% if items.has_prev %}
+			<li class="page-item">
+				<a
+					class="page-link"
+					href="{{ url_for('routes.dashboard', 
+                            page=items.prev_num,
+                            categories=selected_categories,
+                            q=search_query) }}"
+				>
+					<i class="bi bi-chevron-left"></i> Previous
+				</a>
+			</li>
+			{% endif %} {% for page_num in items.iter_pages() %} {% if page_num %}
+			<li class="page-item {% if page_num == items.page %}active{% endif %}">
+				<a
+					class="page-link"
+					href="{{ url_for('routes.dashboard', 
+                                    page=page_num,
+                                    categories=selected_categories,
+                                    q=search_query) }}"
+				>
+					{{ page_num }}
+				</a>
+			</li>
+			{% else %}
+			<li class="page-item disabled">
+				<span class="page-link">...</span>
+			</li>
+			{% endif %} {% endfor %} {% if items.has_next %}
+			<li class="page-item">
+				<a
+					class="page-link"
+					href="{{ url_for('routes.dashboard', 
+                            page=items.next_num,
+                            categories=selected_categories,
+                            q=search_query) }}"
+				>
+					Next <i class="bi bi-chevron-right"></i>
+				</a>
+			</li>
+			{% endif %}
+		</ul>
+	</nav>
+	{% endif %}
+</div>
+{% endblock %}

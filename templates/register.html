@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-page bg-primary">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg border-0 animate__animated animate__fadeIn">
+                    <div class="card-header bg-white border-0 text-center py-4">
+                        <h2 class="text-primary mb-0">
+                            <i class="bi bi-person-plus me-2"></i>Get Started
+                        </h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="POST" class="needs-validation" novalidate>
+                            <!-- Username Input -->
+                            <div class="form-floating mb-4">
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="username" 
+                                       name="username"
+                                       placeholder="Username" 
+                                       required>
+                                <label for="username">
+                                    <i class="bi bi-person-circle me-2"></i>Username
+                                </label>
+                                <div class="invalid-feedback">
+                                    Please choose a username
+                                </div>
+                            </div>
+
+                            <!-- Password Input -->
+                            <div class="form-floating mb-4">
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="password" 
+                                       name="password"
+                                       placeholder="Password" 
+                                       required>
+                                <label for="password">
+                                    <i class="bi bi-key me-2"></i>Password
+                                </label>
+                                <div class="invalid-feedback">
+                                    Please enter a password
+                                </div>
+                            </div>
+
+
+                            <!-- Submit Button -->
+                            <button type="submit" 
+                                    class="btn btn-primary btn-lg w-100 py-3">
+                                Create Account
+                                <i class="bi bi-check2-circle ms-2"></i>
+                            </button>
+                        </form>
+
+                        <!-- Login Link -->
+                        <div class="text-center mt-4">
+                            <span class="text-muted">Already have an account?</span>
+                            <a href="{{ url_for('routes.login') }}"
+                                class="text-decoration-none ms-2">
+                                Sign In
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

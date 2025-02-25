@@ -1,0 +1,69 @@
+{% extends 'base.html' %} {% block content %}
+<div class="auth-page bg-primary">
+	<div class="container py-5">
+		<div class="row justify-content-center">
+			<div class="col-md-8 col-lg-6">
+				<div class="card shadow-lg border-0 animate__animated animate__fadeIn">
+					<div class="card-header bg-white border-0 text-center py-4">
+						<h2 class="text-primary mb-0">
+							<i class="bi bi-box-arrow-in-right me-2"></i>Welcome Back
+						</h2>
+					</div>
+					<div class="card-body p-4">
+						<form method="POST" class="needs-validation" novalidate>
+							<!-- Username/Email Input -->
+							<div class="form-floating mb-4">
+								<input
+									type="text"
+									class="form-control"
+									id="username"
+									name="username"
+									placeholder="Username"
+									required
+								/>
+								<label for="username">
+									<i class="bi bi-person me-2"></i>Username
+								</label>
+								<div class="invalid-feedback">Please enter your username</div>
+							</div>
+
+							<!-- Password Input -->
+							<div class="form-floating mb-4">
+								<input
+									type="password"
+									class="form-control"
+									id="password"
+									name="password"
+									placeholder="Password"
+									required
+								/>
+								<label for="password">
+									<i class="bi bi-lock me-2"></i>Password
+								</label>
+								<div class="invalid-feedback">Please enter your password</div>
+							</div>
+
+							<!-- Submit Button -->
+							<button type="submit" class="btn btn-primary btn-lg w-100 py-3">
+								Sign In
+								<i class="bi bi-arrow-right-short ms-2"></i>
+							</button>
+						</form>
+
+						<!-- Registration Link -->
+						<div class="text-center mt-4">
+							<span class="text-muted">Don't have an account?</span>
+							<a
+								href="{{ url_for('routes.register') }}"
+								class="text-decoration-none ms-2"
+							>
+								Create Account
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,208 @@
+body {
+    background-color: #b1b7be;
+}
+
+.jumbotron {
+    background: linear-gradient(135deg, #6b8dd6 0%, #8e37d7 100%);
+    color: white;
+    border-radius: 15px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0,123,255,.1);
+}
+
+.btn-action {
+    min-width: 80px;
+    margin: 2px;
+}
+
+.form-check-input:checked + .form-check-label {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd;
+}
+.form-check-label {
+    border: 1px solid #dee2e6;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.form-check-label:hover {
+    background-color: #e9ecef;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Replace existing hover effect with this */
+.table-hover tbody tr {
+    transition: all 0.2s ease;
+    position: relative; /* Add this */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+    /* Use shadow instead of horizontal translate */
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    
+    /* Optional: slight vertical lift */
+    transform: translateY(-1px);
+    
+    /* Prevent overflow */
+    z-index: 1;
+}
+
+
+/* Button hover effects */
+.btn-hover {
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.btn-primary.btn-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+}
+
+/* Card hover effect */
+.card-hover {
+    transition: transform 0.2s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+}
+
+.category-checkbox {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    margin: 0;
+    width: 1.2em;
+    height: 1.2em;
+    cursor: pointer;
+}
+
+.category-label {
+    padding: 0.6rem 1.2rem !important;  /* Increased padding */
+    margin: 2px;  /* Added margin between badges */
+    border-radius: 25px !important;  /* More rounded corners */
+}
+
+.category-checkbox {
+    left: 12px;  /* Adjusted checkbox position */
+    width: 1.3em;
+    height: 1.3em;
+}
+
+.btn-outline-secondary {
+    margin-left: 0.5rem;  /* Space between buttons */
+}
+
+/* Home Page Styles */
+.hero-section {
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.features-section i {
+    transition: transform 0.3s ease;
+}
+
+.features-section .card:hover i {
+    transform: scale(1.2);
+}
+
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 0.5rem;
+}
+
+/* Auth Pages */
+.auth-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+}
+
+.auth-page .card {
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.form-floating label {
+    padding-left: 3rem;
+    color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.form-floating>.form-control:focus~label,
+.form-floating>.form-control:not(:placeholder-shown)~label {
+    transform: scale(0.85) translateY(-1.5rem) translateX(0.5rem);
+    color: #0d6efd;
+}
+
+.form-control {
+    padding-left: 3rem !important;
+    height: calc(3.5rem + 2px);
+}
+
+.form-control-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    z-index: 5;
+}
+
+/* Input Validation */
+.was-validated .form-control:valid {
+    border-color: #198754;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+}
+
+.was-validated .form-control:invalid {
+    border-color: #dc3545;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+}
+
+/* Animations */
+.animate__fadeIn {
+    animation-duration: 0.5s;
+}
+
+/* Custom spacing for action buttons */
+.btn-group-actions .btn {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+/* File input alignment */
+.input-group .form-control[type="file"] {
+    flex: 0 0 auto;
+    width: auto;
+}
